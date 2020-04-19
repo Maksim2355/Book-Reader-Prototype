@@ -14,12 +14,14 @@
         android:theme="@style/AppTheme">
 
         <activity android:name="com.example.booklearn.Book.BookActivity"></activity>
-        <activity android:name="com.example.booklearn.BookListLogin.CategoryBookActivity" />
-        <activity android:name="com.example.booklearn.AuthLogin.LoginActivity">
+        <activity android:name="com.example.booklearn.BookListLogin.CategoryBookActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name="com.example.booklearn.AuthLogin.LoginActivity">
+
         </activity>
     </application>
 

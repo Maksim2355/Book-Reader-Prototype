@@ -6,11 +6,13 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.example.booklearn.ActivityChange
 import com.example.booklearn.ActivityContainFragment
+import com.example.booklearn.JsonModel.Author
+import com.example.booklearn.JsonModel.Book
+import com.example.booklearn.JsonModel.Genres
 import com.example.booklearn.JsonModel.JsonElement
-import com.example.booklearn.UpdateAdapter
-import com.google.gson.Gson
+import com.example.learnbook.R
+import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.io.IOException
 import java.lang.reflect.Type
@@ -21,8 +23,7 @@ import java.lang.reflect.Type
     *Добавление данных в JSON и чтения из него
     *Его фрагменты должны поддерживать обновление списка ресайкл
  */
-class CategoryBookActivity : AppCompatActivity(), ActivityContainFragment,
-    ActivityChange, JsonParseListBook, UpdateAdapter  {
+class CategoryBookActivity : AppCompatActivity(), ActivityContainFragment, JsonParseListBook  {
     private lateinit var settings: SharedPreferences
     private lateinit var frTrans: FragmentTransaction
     private val LOG_STATE_TRANS_FR = "Fragment state change"
@@ -55,40 +56,36 @@ class CategoryBookActivity : AppCompatActivity(), ActivityContainFragment,
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun goNewActivity(login: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun updateList() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override fun getJsonElements(parent: String?): List<JsonElement>? {
-        val text: String = "Book.json"
-        var buffer: ByteArray? = null
-        try {
-            val isr = assets.open(text)
-            val size: Int = isr.available()
-            buffer = ByteArray(size)
-            isr.read(buffer)
-            isr.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        val str_data = String(buffer!!)
+        val textJson = getAssetsText("Book.json")
         val itemsListType: Type =
-            object : TypeToken<List<JsonElement>?>() {}.type
-        val gson = Gson()
-        if (parent == null){
+            object : TypeToken<List<Genres>>() {}.type
+        val gson = GsonBuilder().create()
 
-        }
-        val vs: List<Ge>
-        return
+        val listJsonElement: List<Genres> = gson.fromJson(textJson, itemsListType)
+        println(listJsonElement)
+
+        return listJsonElement
     }
 
     override fun saveJsonElement(parent: String?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+
+    private fun getAssetsText(filename:String): String?{
+        return try {
+            val isr = assets.open(filename)
+            val size: Int = isr.available()
+            val buffer = ByteArray(size)
+            isr.read(buffer)
+            isr.close()
+            String(buffer)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
+    }
 
 }

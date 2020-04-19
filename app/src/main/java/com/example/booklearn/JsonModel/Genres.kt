@@ -1,4 +1,16 @@
 package com.example.booklearn.JsonModel
 
-data class Genres(override val title: String,override val desc: String,
-                  val listAuthor: List<JsonElement>): JsonElement()
+data class Genres(val Title: String, private val desc: String,
+                  val listAuthor: List<Author>?): JsonElement {
+    override fun getNames(): String {
+        return Title
+    }
+
+    override fun getDescr(): String {
+        return desc
+    }
+
+    override fun getElem(): List<JsonElement> {
+        return listAuthor!!
+    }
+}

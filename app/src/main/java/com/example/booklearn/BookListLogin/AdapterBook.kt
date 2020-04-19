@@ -5,11 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.booklearn.JsonModel.Genres
 import com.example.booklearn.JsonModel.JsonElement
 import com.example.learnbook.R
 
 
-class AdapterBook(private val listItem: List<JsonElement>): RecyclerView.Adapter<AdapterBook.ViewHolder>() {
+class AdapterBook(private val listItem: List<JsonElement>?): RecyclerView.Adapter<AdapterBook.ViewHolder>() {
     private lateinit var mTextTitle: TextView
     private lateinit var mTextDesc: TextView
 
@@ -28,20 +29,25 @@ class AdapterBook(private val listItem: List<JsonElement>): RecyclerView.Adapter
     }
 
     override fun getItemCount(): Int {
-         return listItem.size
+         return listItem!!.size
     }
 
     inner class ViewHolder(v: View):
         RecyclerView.ViewHolder(v), View.OnClickListener {
 
+        init {
+            v.setOnClickListener(this)
+        }
 
         fun bind(position: Int){
-            mTextTitle.text = listItem[position].title
-            mTextDesc.text = listItem[position].desc
+            if (listItem != null) {
+                mTextTitle.text = listItem[position].getNames()
+                mTextDesc.text = listItem[position].getDescr()
+            }
         }
 
         override fun onClick(v: View?) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
         }
     }
 }
