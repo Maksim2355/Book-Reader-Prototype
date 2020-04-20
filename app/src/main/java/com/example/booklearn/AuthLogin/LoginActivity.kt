@@ -17,10 +17,9 @@ import com.example.booklearn.BookListLogin.CategoryBookActivity
 import com.example.booklearn.JsonAuthorization
 import com.example.booklearn.JsonModel.User
 import com.example.learnbook.R
-import com.google.gson.GsonBuilder
+import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.*
-import java.lang.reflect.Type
 
 
 class LoginActivity : AppCompatActivity(), ActivityContainFragment,
@@ -54,8 +53,8 @@ class LoginActivity : AppCompatActivity(), ActivityContainFragment,
     }
 
 
-    override fun getFragment(): Fragment {
-        TODO()
+    override fun getFragment(): Fragment? {
+        return mainFragment
     }
 
     override fun replaceFragment(frCont: Int, fr: Fragment) {
@@ -74,26 +73,20 @@ class LoginActivity : AppCompatActivity(), ActivityContainFragment,
 
     override fun getListUserJson(): List<User>? {
         try {
-            val itemsListType: Type =
-                object : TypeToken<List<User>?>() {}.type
             val isr = InputStreamReader(openFileInput(USER_FILE))
-            val reader = BufferedReader(isr)
             var jsonText: String?
             val builder: StringBuilder = StringBuilder()
             do {
-                jsonText = reader.readLine()
+                jsonText = BufferedReader(isr).readLine()
                 if (jsonText == null)
                     break
                 builder.append("${jsonText}\n")
             } while (true)
             isr.close()
-            val gson = GsonBuilder().create()
-            val js: List<User>? = gson.fromJson(builder.toString(), itemsListType)
-            return js
-        }catch (e: FileNotFoundException){
+            return Gson().fromJson(builder.toString(), object : TypeToken<List<User>?>() {}.type)
+        } catch (e: FileNotFoundException) {
             Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
         }
-        Toast.makeText(applicationContext, "Опасность", Toast.LENGTH_LONG).show()
         return null
     }
 
@@ -105,8 +98,19 @@ class LoginActivity : AppCompatActivity(), ActivityContainFragment,
             else {
                 listOf(user)
             }
-        val gson = GsonBuilder().create()
-        val jsonFile: String = gson.toJson(newUserList)
+        val jsonFile: String = Gson().toJson(newUserList)
+        writeFileJson(jsonFile)
+    }
+
+    //Сохранения состояния
+    override fun goNewActivity(login: String) {
+        val prefEditor: Editor = settings.edit()
+        prefEditor.putString(PREF_LOGIN, "").apply()
+        val intent = Intent(this, CategoryBookActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun writeFileJson(jsonFile: String){
         try {
             val outputStream: OutputStream = openFileOutput(USER_FILE, 0)
             val osw = OutputStreamWriter(outputStream)
@@ -118,14 +122,6 @@ class LoginActivity : AppCompatActivity(), ActivityContainFragment,
         }catch (e: IOException){
             Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
         }
-    }
-
-    //Сохранения состояния
-    override fun goNewActivity(login: String) {
-        val prefEditor: Editor = settings.edit()
-        prefEditor.putString(PREF_LOGIN, "").apply()
-        val intent = Intent(this, CategoryBookActivity::class.java)
-        startActivity(intent)
     }
 
 

@@ -9,7 +9,11 @@ data class Book(val nameBook: String, val content: String): JsonElement {
         return content
     }
 
-    override fun getElem(): List<JsonElement> {
-        TODO("Not yet implemented")
+    override fun getElem(): List<JsonElement>? {
+        return null
+    }
+
+    override fun getJsonLevel(): Int {
+        return 3
     }
 }

@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.booklearn.ActivityContainFragment
+import com.example.booklearn.UpdateAdapter
 
 import com.example.learnbook.R
 
@@ -25,7 +27,10 @@ class GenresListFragment : Fragment() {
         val listRecycler = v.findViewById<RecyclerView>(R.id.list_genres_recycler)
         val layoutManager = LinearLayoutManager(context)
         listRecycler.layoutManager = layoutManager
-        val adapter = AdapterBook(genresJson.getJsonElements(null))
+        val updateAdapter: UpdateAdapter = activity as UpdateAdapter
+        val transFragment: ActivityContainFragment = activity as ActivityContainFragment
+        val adapter =
+            AdapterBook(genresJson.getJsonElements(null), updateAdapter, transFragment)
         listRecycler.adapter = adapter
         return v
     }

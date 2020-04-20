@@ -6,6 +6,8 @@ interface JsonElement{
 
     fun getDescr(): String
 
-    fun getElem(): List<JsonElement>
+    fun getElem(): List<JsonElement>?
+
+    fun getJsonLevel(): Int
 
 }

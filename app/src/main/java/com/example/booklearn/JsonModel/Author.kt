@@ -14,4 +14,8 @@ data class Author(val name: String, val about: String,
     override fun getElem(): List<JsonElement> {
         return listBook!!
     }
+
+    override fun getJsonLevel(): Int {
+        return 2
+    }
 }

@@ -13,4 +13,8 @@ data class Genres(val Title: String, private val desc: String,
     override fun getElem(): List<JsonElement> {
         return listAuthor!!
     }
+
+    override fun getJsonLevel(): Int {
+        return 1
+    }
 }
