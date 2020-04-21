@@ -13,8 +13,16 @@ import com.example.booklearn.UpdateAdapter
 import com.example.learnbook.R
 
 
-class AdapterBook(private val listItem: List<JsonElement>?, updateAdapter: UpdateAdapter,
+class AdapterBook(private val listItem: List<JsonElement>?,
                   private val transFragment: ActivityContainFragment): RecyclerView.Adapter<AdapterBook.ViewHolder>() {
+
+    private var c: Int? = null
+    constructor(listItem: List<JsonElement>?,
+                transFragment: ActivityContainFragment, com: Int ): this(listItem, transFragment){
+        c = com
+    }
+
+
     private lateinit var mTextTitle: TextView
     private lateinit var mTextDesc: TextView
 
@@ -53,24 +61,30 @@ class AdapterBook(private val listItem: List<JsonElement>?, updateAdapter: Updat
         }
 
         override fun onClick(v: View?) {
-
+            val args = Bundle()
             when(listItem?.get(adapterPosition)?.getJsonLevel()){
                 1-> {
-                    val args = Bundle()
+                    println(listItem.toString())
+                    //Переход на список авторов
                     args.putInt("List", adapterPosition)
                     val fragmentTransition = WritersListFragment()
                     fragmentTransition.arguments = args
                     transFragment.replaceFragment(idContainFragment, fragmentTransition)
                 }
                 2->{
-                    val args = Bundle()
-                    args.putInt("List", adapterPosition)
+                    //Переход на список с книгами
+                    args.putInt("List", c!!)
+                    args.putInt("List2", adapterPosition)
                     val fragmentTransition = BookListFragment()
                     fragmentTransition.arguments = args
                     transFragment.replaceFragment(idContainFragment, fragmentTransition)
                 }
                 3-> {
-
+                    //Переход на фрагмент
+                    args.putString("Content", listItem[adapterPosition].getDescr())
+                    val fr = ContentBookFragment()
+                    fr.arguments = args
+                    transFragment.replaceFragment(idContainFragment, fr)
                 }
             }
         }

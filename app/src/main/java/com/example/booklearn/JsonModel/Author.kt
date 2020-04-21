@@ -1,7 +1,7 @@
 package com.example.booklearn.JsonModel
 
 data class Author(val name: String, val about: String,
-                  val listBook: List<Book>?): JsonElement {
+                  val bookList: List<Book>?): JsonElement {
 
     override fun getNames(): String {
         return name
@@ -12,7 +12,7 @@ data class Author(val name: String, val about: String,
     }
 
     override fun getElem(): List<JsonElement> {
-        return listBook!!
+        return bookList!!
     }
 
     override fun getJsonLevel(): Int {

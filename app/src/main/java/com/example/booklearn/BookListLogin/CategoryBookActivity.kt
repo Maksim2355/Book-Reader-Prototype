@@ -42,11 +42,13 @@ class CategoryBookActivity : AppCompatActivity(),
 
     override fun replaceFragment(frCont: Int, fr: Fragment) {
         supportFragmentManager.beginTransaction().replace(frCont, fr).commit()
+        mainFragment = fr
         Log.d(LOG_STATE_TRANS_FR,"replace Fragment")
     }
 
     override fun addFragment(frCont: Int, fr: Fragment) {
         supportFragmentManager.beginTransaction().add(frCont, fr).commit()
+        mainFragment = fr
         Log.d(LOG_STATE_TRANS_FR, "add Fragment")
     }
 

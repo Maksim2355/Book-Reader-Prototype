@@ -5,10 +5,8 @@
     android:layout_height="match_parent"
     tools:context="com.example.booklearn.BookListLogin.BookListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_book_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="dsaaaaaaaaaaaaaaaa" />
-
+        android:layout_height="match_parent" />
 </FrameLayout>

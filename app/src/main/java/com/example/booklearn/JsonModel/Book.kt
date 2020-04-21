@@ -1,6 +1,7 @@
 package com.example.booklearn.JsonModel
 
-data class Book(val nameBook: String, val content: String): JsonElement {
+data class Book(val nameBook: String,
+                val content: String): JsonElement {
     override fun getNames(): String {
         return nameBook
     }

@@ -29,12 +29,12 @@ class WritersListFragment : Fragment() {
         val listRecycler = v.findViewById<RecyclerView>(R.id.list_author_recycler)
         val layoutManager = LinearLayoutManager(context)
         listRecycler.layoutManager = layoutManager
-        val updateAdapter: UpdateAdapter = activity as UpdateAdapter
         val transFragment: ActivityContainFragment = activity as ActivityContainFragment
+        val numArg: Int = arguments!!.getInt("List")
         val list: List<JsonElement>? =
-            genresJson.getJsonElements(null)?.get(arguments!!.getInt("List"))?.getElem()
+            genresJson.getJsonElements(null)?.get(numArg)?.getElem()
         val adapter =
-            AdapterBook(list, updateAdapter, transFragment)
+            AdapterBook(list, transFragment, numArg)
         listRecycler.adapter = adapter
         // Inflate the layout for this fragment
         return v

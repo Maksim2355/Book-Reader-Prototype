@@ -27,10 +27,9 @@ class GenresListFragment : Fragment() {
         val listRecycler = v.findViewById<RecyclerView>(R.id.list_genres_recycler)
         val layoutManager = LinearLayoutManager(context)
         listRecycler.layoutManager = layoutManager
-        val updateAdapter: UpdateAdapter = activity as UpdateAdapter
         val transFragment: ActivityContainFragment = activity as ActivityContainFragment
         val adapter =
-            AdapterBook(genresJson.getJsonElements(null), updateAdapter, transFragment)
+            AdapterBook(genresJson.getJsonElements(null), transFragment)
         listRecycler.adapter = adapter
         return v
     }
